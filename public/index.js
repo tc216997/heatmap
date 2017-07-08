@@ -1,4 +1,3 @@
-
 const createTR = () => {
   for (let i = 0; i < 10; i++) {
     let tr = document.createElement('tr');
@@ -60,8 +59,8 @@ const color = () => {
     }
     if (absVal <= 1.999 && absVal >= 0.01) {
       (Math.sign(change) === 1) ? 
-        item.style.backgroundColor = '#006600':
-        item.style.backgroundColor = '#660000';
+        item.style.backgroundColor = '#004c00':
+        item.style.backgroundColor = '#330000';
     }
     if (absVal === 0) {
       item.style.backgroundColor = '#494f5e';
