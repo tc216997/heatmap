@@ -36,7 +36,7 @@ const fillTD = function(obj, count) {
 const color = function() {
   let elements = document.querySelectorAll('td');
   elements.forEach(item => {
-    let change = Number(item.dataset.value);
+    let change = parseFloat(item.dataset.value);
     let absVal = Math.abs(change);
     if (absVal > 19.999) {
       (Math.sign(change) === 1) ? 
@@ -110,7 +110,7 @@ const updateData = function() {
           let ele = document.getElementById(object.symbol + '_change');
           let td = document.getElementById('td'+index);
           let previous = parseFloat(ele.innerHTML.substring(0, ele.innerHTML.length -1)); //Number(ele.innerHTML.substring(0, ele.textContent.length-1));
-          let current = Number(object.percent_change_24h);
+          let current = parseFloat(object.percent_change_24h);
           current > 0 ? up++:down++;
           if (previous !== current) {
             let defaultColor = td.style.backgroundColor;
