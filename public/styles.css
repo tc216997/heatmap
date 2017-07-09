@@ -29,7 +29,9 @@ tr {
   height:80px;
 }
 td {
-  text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   text-align:center;
   border: 1px solid black;
   text-shadow: 1px 0px 0px rgba(0, 0, 0, 1);
