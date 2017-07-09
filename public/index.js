@@ -26,7 +26,11 @@ const fillTD = function(obj, count) {
   coinname.className = 'white';
   paragraph.className = 'white';
   paragraph.id = obj.symbol + '_change';
-  paragraph.innerHTML = obj.percent_change_24h + '%';
+  if (obj.percent_change_24h === null) {
+    paragraph.innerHTML = '0.0%';
+  } else {
+    paragraph.innerHTML = obj.percent_change_24h + '%';    
+  }
   document.getElementById(td).dataset.value = obj.percent_change_24h;
   document.getElementById(td).appendChild(h4);
   document.getElementById(td).appendChild(coinname);
@@ -63,7 +67,7 @@ const color = function() {
         item.style.backgroundColor = '#004c00':
         item.style.backgroundColor = '#330000';
     }
-    if (absVal === 0) {
+    if (absVal === 0 || isNaN(absVal)) {
       item.style.backgroundColor = '#494f5e';
     }
   });
@@ -82,8 +86,13 @@ const getData = function() {
         createTR();
         response.map((object, index) => {
           fillTD(object, index);
-          let current = Number(object.percent_change_24h);
-          current > 0 ? up++:down++;
+          let current = parseFloat(object.percent_change_24h);
+          if (current > 0) {
+            up++;
+          }
+          if (current < 0) {
+            down++;
+          }
         });
         document.getElementById('up').textContent = up;
         document.getElementById('down').textContent = down;
@@ -109,9 +118,14 @@ const updateData = function() {
         response.map((object, index) => {
           let ele = document.getElementById(object.symbol + '_change');
           let td = document.getElementById('td'+index);
-          let previous = parseFloat(ele.innerHTML.substring(0, ele.innerHTML.length -1)); //Number(ele.innerHTML.substring(0, ele.textContent.length-1));
+          let previous = parseFloat(ele.innerHTML.substring(0, ele.innerHTML.length -1));
           let current = parseFloat(object.percent_change_24h);
-          current > 0 ? up++:down++;
+          if (current > 0) {
+            up++;
+          }
+          if (current < 0) {
+            down++;
+          }          
           if (previous !== current) {
             let defaultColor = td.style.backgroundColor;
             if (current > previous) {
@@ -126,7 +140,11 @@ const updateData = function() {
               }, 600);
             }
           }
-          ele.innerHTML = object.percent_change_24h + '%';
+          if (object.percent_change_24h === null) {
+            ele.innerHTML = '0.0%';
+          } else {
+            ele.innerHTML = object.percent_change_24h + '%';  
+          }          
         });
         document.getElementById('up').textContent = up;
         document.getElementById('down').textContent = down;
