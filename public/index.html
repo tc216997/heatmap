@@ -8,12 +8,25 @@
     <title>Simple heat map</title>
     <!-- Custom CSS -->
     <link href="styles.css" rel="stylesheet" type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom Fonts --> 
 </head>
 
 <body>
-  <h1 class="white">CoinMarketCap Top 100</h1>
-  <table id="main"></table>
+  <h1 class="white">CoinMarketCap Top 100 
+  </h1>
+  <div class="trend">
+    <span class="green">Up:&nbsp;
+      <i class="fa fa-arrow-up green" aria-hidden="true"></i>
+      <span id="up"></span>
+    </span>
+    <span class="red">&emsp;Down:&nbsp;
+      <i class="fa fa-arrow-down red" aria-hidden="true"></i>
+      <span id="down">&nbsp;</span>
+    </span>
+  </div>
+  <table id="main">
+  </table>
   <script type="text/javascript" src="index.js">  </script>
 </body>
 

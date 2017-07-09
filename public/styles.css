@@ -7,13 +7,18 @@ body {
 .white {
   color:white;
 }
-
+.background-white {
+  background-color:white;
+}
 h1 {
   text-align: center;
+  margin-top:0;
+  margin-bottom:0;
 }
 h4, p {
   margin: 10px;
 }
+
 table {
   table-layout: fixed;
   width: 100%;
@@ -27,4 +32,19 @@ td {
   text-align:center;
   border: 1px solid black;
   text-shadow: 1px 0px 0px rgba(0, 0, 0, 1);
+}
+.trend{
+  text-align:center;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+span {
+  font-size: 22px;
+}
+.green {
+ color:#00ff00;
+}
+
+.red {
+ color:#ff0000;
 }
