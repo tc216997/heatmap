@@ -15,6 +15,11 @@ h1 {
   margin-top:0;
   margin-bottom:0;
 }
+h3 {
+  font-size: 22px;
+  text-align: center;
+  margin: 10px;
+}
 h4, p {
   margin: 10px;
 }
@@ -29,9 +34,9 @@ tr {
   height:80px;
 }
 td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align:center;
   border: 1px solid black;
   text-shadow: 1px 0px 0px rgba(0, 0, 0, 1);

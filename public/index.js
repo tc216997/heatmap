@@ -10,28 +10,31 @@ const createTR = function() {
 const createTD = function(rowId, count) {
   for (let i = 0; i < 10; i++) {
     let td = document.createElement('td');
-    td.id = 'td' + (i + count*10);
+    td.id = (i + count*10);
     document.getElementById(rowId).appendChild(td);
   }
 };
 
-const fillTD = function(obj, count) {
+const fillTD = function(object, count) {
   let h4 = document.createElement('h4');
   let coinname = document.createElement('p');
   let paragraph = document.createElement('p');
-  let td = 'td' + count;
-  h4.innerHTML = obj.symbol;
-  coinname.innerHTML = obj.name;
+  let td = count;
+  h4.innerHTML = object.symbol;
   h4.className = 'white';
+  h4.id = object.rank+'h4';
+  coinname.innerHTML = object.name;
   coinname.className = 'white';
+  coinname.id = object.rank +'p'
   paragraph.className = 'white';
-  paragraph.id = obj.symbol + '_change';
-  if (obj.percent_change_24h === null) {
+  paragraph.id = object.name;
+  paragraph.id = object.rank + '_change';
+  if (object.percent_change_24h === null) {
     paragraph.innerHTML = '0.0%';
   } else {
-    paragraph.innerHTML = obj.percent_change_24h + '%';    
+    paragraph.innerHTML = object.percent_change_24h + '%';    
   }
-  document.getElementById(td).dataset.value = obj.percent_change_24h;
+  document.getElementById(td).dataset.value = object.percent_change_24h;
   document.getElementById(td).appendChild(h4);
   document.getElementById(td).appendChild(coinname);
   document.getElementById(td).appendChild(paragraph);
@@ -83,6 +86,7 @@ const getData = function() {
         let response = JSON.parse(http.response);
         let up = 0;
         let down = 0;
+        let totalCap = 0;
         createTR();
         response.map((object, index) => {
           fillTD(object, index);
@@ -93,9 +97,11 @@ const getData = function() {
           if (current < 0) {
             down++;
           }
+          totalCap += parseFloat(object.market_cap_usd);
         });
         document.getElementById('up').textContent = up;
         document.getElementById('down').textContent = down;
+        document.getElementById('marketcap').innerHTML = `$${totalCap.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}`;
         color();
       } else {
         console.log('error fetching data');
@@ -115,39 +121,37 @@ const updateData = function() {
         let response = JSON.parse(http.response);
         let up = 0;
         let down = 0;
+        let totalCap = 0;
         response.map((object, index) => {
-          let ele = document.getElementById(object.symbol + '_change');
-          let td = document.getElementById('td'+index);
-          let previous = parseFloat(ele.innerHTML.substring(0, ele.innerHTML.length -1));
+          let h4 = document.getElementById(object.rank + 'h4');
+          let paragraph = document.getElementById(object.rank + 'p');
+          let paragraph2= document.getElementById(object.rank + '_change');
+          let tableData = document.getElementById(index);
           let current = parseFloat(object.percent_change_24h);
+          let defaultColor = tableData.style.backgroundColor;
+          document.getElementById(index).dataset.value = object.percent_change_24h;
+          h4.innerHTML = object.symbol;
+          paragraph.innerHTML = object.name;
           if (current > 0) {
             up++;
           }
           if (current < 0) {
             down++;
           }          
-          if (previous !== current) {
-            let defaultColor = td.style.backgroundColor;
-            if (current > previous) {
-              td.style.backgroundColor = 'rgb(102, 0, 0)';
-              setTimeout(() => {
-                td.style.backgroundColor = defaultColor;
-              }, 600);
-            } else {
-              td.style.backgroundColor = 'rgb(0, 76, 0)';
-              setTimeout(() => {
-                td.style.backgroundColor = defaultColor;
-              }, 600);
-            }
-          }
           if (object.percent_change_24h === null) {
-            ele.innerHTML = '0.0%';
+            paragraph2.innerHTML = '0.0%';
           } else {
-            ele.innerHTML = object.percent_change_24h + '%';  
-          }          
+            paragraph2.innerHTML = object.percent_change_24h + '%';  
+          }
+          totalCap += parseFloat(object.market_cap_usd);         
         });
+        color();
         document.getElementById('up').textContent = up;
         document.getElementById('down').textContent = down;
+        document.getElementById('marketcap').innerHTML = `$${totalCap.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}`;
+        document.querySelectorAll('td').forEach((element, index) => {
+          let symbol = element.firstChild.textContent;
+        });
       } else {
         console.log('error updating data');
       }
